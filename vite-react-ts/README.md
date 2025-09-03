@@ -67,3 +67,14 @@ export default tseslint.config([
   },
 ])
 ```
+🔑 Lưu ý: Biến env bắt buộc bắt đầu bằng VITE_ thì mới được inject vào code frontend.
+(mấy biến nhạy cảm không bắt đầu bằng VITE_ để tránh bị lộ).
+
+Mode trong Vite:
+
+npm run dev → chạy mode development.
+npm run build → mode production.
+
+Có thể custom:
+vite --mode staging
+→ thì Vite sẽ đọc .env.staging.
