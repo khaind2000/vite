@@ -21,6 +21,13 @@ export default defineConfig({
       '@components': '@/components',
       '@utils': '/src/utils'
     },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/styles/variables.scss";`
+      }
+    }
   }
 })
 

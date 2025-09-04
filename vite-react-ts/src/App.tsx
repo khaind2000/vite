@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { sayHello } from './utils/sayHello'
 import ReactLogo from './assets/react.svg?react'
+import styles from './App.module.css'
+import './styles.scss'
+import Button from './components/Button'
+import Card from './components/Card'
 
 type Props = {
   name?: string
@@ -32,6 +36,14 @@ function App({ name }: Props) {
     <p>Version: {import.meta.env.VITE_VERSION}</p>
 
     <ReactLogo width={100} height={150} />
+
+    <h1 className="title">Hello Vite</h1>
+    <button className="btn">Click me</button>
+    <Card title='Test card'>
+      <div>Test</div>
+      <h1 className={styles.title}>Hello Vite</h1>
+      <Button label="Bấm tao đi" />
+    </Card>
   </>);
 }
 
