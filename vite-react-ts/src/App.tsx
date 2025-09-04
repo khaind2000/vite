@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { sayHello } from './utils/sayHello';
+import { sayHello } from './utils/sayHello'
+import ReactLogo from './assets/react.svg?react'
 
 type Props = {
   name?: string
@@ -29,6 +30,8 @@ function App({ name }: Props) {
     <p>API URL: {import.meta.env.VITE_API_URL}</p>
     <p>{sayHello("Vite")}</p>
     <p>Version: {import.meta.env.VITE_VERSION}</p>
+
+    <ReactLogo width={100} height={150} />
   </>);
 }
 

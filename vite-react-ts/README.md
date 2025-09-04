@@ -78,3 +78,11 @@ npm run build → mode production.
 Có thể custom:
 vite --mode staging
 → thì Vite sẽ đọc .env.staging.
+
+Plugins trong Vite = object với các hook (giống Rollup).
+4. Các plugin phổ biến
+@vitejs/plugin-react → React (đương nhiên 😆).
+vite-plugin-svgr → import SVG như component.
+vite-plugin-pwa → support Progressive Web App.
+vite-plugin-compression → nén gzip/brotli khi build.
+vite-plugin-checker → type check TS, lint, stylelint.
