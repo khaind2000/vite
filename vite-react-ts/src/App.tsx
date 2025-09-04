@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import './App.css'
 import { sayHello } from './utils/sayHello'
 import ReactLogo from './assets/react.svg?react'
@@ -6,6 +6,12 @@ import styles from './App.module.css'
 import './styles.scss'
 import Button from './components/Button'
 import Card from './components/Card'
+import logo from './assets/react.svg'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+const LazyChart = lazy(() => import('./components/Chart'))
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
 
 type Props = {
   name?: string
@@ -44,6 +50,26 @@ function App({ name }: Props) {
       <h1 className={styles.title}>Hello Vite</h1>
       <Button label="Bấm tao đi" />
     </Card>
+
+    <img src={logo} alt="Logo" width={100} />
+    <p>File từ public folder:</p>
+    <img src="/vite.svg" alt="Vite public" width={100} />
+
+    <div>
+      <h1>Trang Dashboard</h1>
+      <Suspense fallback={<p>Đang tải chart...</p>}>
+        <LazyChart />
+      </Suspense>
+    </div>
+
+    <BrowserRouter>
+      <Suspense fallback={<p>Đang tải...</p>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   </>);
 }
 

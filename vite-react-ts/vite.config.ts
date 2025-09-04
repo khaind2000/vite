@@ -28,7 +28,8 @@ export default defineConfig({
         additionalData: `@import "@/styles/variables.scss";`
       }
     }
-  }
+  },
+   base: '/vite/', // repo name
 })
 
 function replaceConsole(): import('vite').Plugin {
