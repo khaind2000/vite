@@ -7,7 +7,9 @@ import './styles.scss'
 import Button from './components/Button'
 import Card from './components/Card'
 import logo from './assets/react.svg'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
+import { Clock } from './components/Clock'
+import Contact from './pages/Contact'
 
 const LazyChart = lazy(() => import('./components/Chart'))
 const Home = lazy(() => import('./pages/Home'))
@@ -62,14 +64,19 @@ function App({ name }: Props) {
       </Suspense>
     </div>
 
-    <BrowserRouter>
-      <Suspense fallback={<p>Đang tải...</p>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    {/* <BrowserRouter>   //Dùng cho CSR lazy-load với Route ở client
+    <Suspense fallback={<p>Đang tải...</p>}> */}
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
+    {/* </Suspense>
+    </BrowserRouter> */}
+    <Link to="/">🏠 Home</Link> |{" "}
+    <Link to="/about">ℹ️ About</Link> |{" "}
+    <Link to="/contact">ℹ️ Contact</Link>
+    <Clock />
   </>);
 }
 
