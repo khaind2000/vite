@@ -1,4 +1,5 @@
-import { defineConfig } from 'vite'
+// import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
 
@@ -29,7 +30,12 @@ export default defineConfig({
       }
     }
   },
-   base: '/vite/', // repo name
+  base: './', // thêm dòng này để asset dùng relative path
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts',
+  },
 })
 
 function replaceConsole(): import('vite').Plugin {
