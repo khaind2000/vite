@@ -2,8 +2,9 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
-import { visualizer } from "rollup-plugin-visualizer";
-import path from "path"
+import { visualizer } from "rollup-plugin-visualizer"
+// import path from "path"
+import { VitePWA } from "vite-plugin-pwa"
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +14,31 @@ export default defineConfig({
     replaceConsole(),
     replaceConsolePlugin('warm'),
     bannerPlugin(),
-    visualizer({ open: true }) // tự động mở biểu đồ sau khi build
+    visualizer({ open: true }), // tự động mở biểu đồ sau khi build
+    VitePWA({
+      registerType: "autoUpdate",
+      manifest: {
+        name: "My Vite PWA",
+        short_name: "VitePWA",
+        theme_color: "#ffffff",
+        background_color: "#ffffff",
+        display: "standalone",
+        scope: "/",
+        start_url: "/",
+        icons: [
+          {
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      },
+    }),
   ],
   server: {
     port: 3000,       // đổi port dev server
@@ -46,25 +71,25 @@ export default defineConfig({
     include: ["lodash", "dayjs"], // ép Vite pre-bundle sớm các lib hay dùng.
     exclude: ["big-lib-you-dont-need"]  // loại bỏ khỏi pre-bundle (chỉ load khi cần).
   },
-  // Dùng libary mode để build thư viện
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
-      name: "MyLib",
-      fileName: (format) => `my-lib.${format}.js`,
-    },
-    rollupOptions: {
-      external: ["react", "react-dom"], // không bundle react
-      output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
-      },
-    },
-  }
-  // Khi build sẽ có: my-lib.es.js, my-lib.umd.js, style.css là thư viện có thể install: npm install ../vite-react-ts/dist ==> rồi sử dụng: import { Button } from "my-lib";
-  // xuất bản thành NPM package: npm login \n& npm publish --access public
+  // // Dùng libary mode để build thư viện
+  // build: {
+  //   lib: {
+  //     entry: path.resolve(__dirname, "src/index.ts"),
+  //     name: "MyLib",
+  //     fileName: (format) => `my-lib.${format}.js`,
+  //   },
+  //   rollupOptions: {
+  //     external: ["react", "react-dom"], // không bundle react
+  //     output: {
+  //       globals: {
+  //         react: "React",
+  //         "react-dom": "ReactDOM",
+  //       },
+  //     },
+  //   },
+  // }
+  // // Khi build sẽ có: my-lib.es.js, my-lib.umd.js, style.css là thư viện có thể install: npm install ../vite-react-ts/dist ==> rồi sử dụng: import { Button } from "my-lib";
+  // // xuất bản thành NPM package: npm login \n& npm publish --access public
 })
 
 function replaceConsole(): import('vite').Plugin {
