@@ -9,22 +9,29 @@ import Card from './components/Card'
 import logo from './assets/react.svg'
 import { Link, Route, Routes } from 'react-router-dom'
 import { Clock } from './components/Clock'
-import Contact from './pages/Contact'
 
 const LazyChart = lazy(() => import('./components/Chart'))
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
+// Lazy load kèm preload trước khi user bấm
+const Contact = lazy(() => import('./pages/Contact'))
+import("./pages/Contact"); // preload
 
 type Props = {
   name?: string
 };
 
 function App({ name }: Props) {
+  const [count, setCount] = useState(0);
+  const [msg, setMsg] = useState("");
+
   useEffect(() => {
     console.log("API URL:", import.meta.env.VITE_API_URL);
+    fetch("/api/hello") // tự động proxy sang http://localhost:3001/api/hello
+      .then((res) => res.json())
+      .then((data) => setMsg(data.message));
   }, []);
 
-  const [count, setCount] = useState(0);
   return (<>
     <h1>Hello {name}</h1>
     <div className="card">
@@ -40,6 +47,7 @@ function App({ name }: Props) {
     <button onClick={() => alert('Hello Vite!')}>Test</button>
     <h1>{import.meta.env.VITE_APP_NAME}</h1>
     <p>API URL: {import.meta.env.VITE_API_URL}</p>
+    <p>{msg}</p>
     <p>{sayHello("Vite")}</p>
     <p>Version: {import.meta.env.VITE_VERSION}</p>
 
@@ -76,6 +84,8 @@ function App({ name }: Props) {
     <Link to="/">🏠 Home</Link> |{" "}
     <Link to="/about">ℹ️ About</Link> |{" "}
     <Link to="/contact">ℹ️ Contact</Link>
+    {/* Hoặc prefetch qua <link> */}
+    <link rel="prefetch" href="/src/pages/Contact.tsx" />
     <Clock />
   </>);
 }
